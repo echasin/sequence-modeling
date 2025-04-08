@@ -1,0 +1,8 @@
+# Core data processing and analysis
+pandas>=2.2.1
+
+# Visualization
+matplotlib>=3.8.3
+
+# Network analysis and visualization
+networkx>=3.2.1
