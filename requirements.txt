@@ -6,3 +6,6 @@ matplotlib>=3.8.3
 
 # Network analysis and visualization
 networkx>=3.2.1
+
+# Tabulate for formatted output
+tabulate>=0.9.0
