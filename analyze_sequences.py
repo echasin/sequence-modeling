@@ -6,19 +6,20 @@ from tabulate import tabulate
 from collections import Counter
 
 class SequenceAnalyzer:
-    def __init__(self, file_path='results_id_seq.csv'):
-        self.file_path = Path(file_path)
+    def __init__(self, input_file='src/data/features/feature_sequence.csv', output_file='src/data/analysis/sequence_analysis.csv'):
+        self.input_file = Path(input_file)
+        self.output_file = Path(output_file)
         self.df = None
         self.unique_sequences = None
         
     def read_sequences(self):
         """Read and validate the sequence CSV file."""
         try:
-            if not self.file_path.exists():
-                print(f"Error: {self.file_path} not found.")
+            if not self.input_file.exists():
+                print(f"Error: {self.input_file} not found.")
                 sys.exit(1)
                 
-            self.df = pd.read_csv(self.file_path)
+            self.df = pd.read_csv(self.input_file)
             
             # Verify required columns exist
             if 'sequence' not in self.df.columns:
@@ -82,16 +83,22 @@ class SequenceAnalyzer:
             tablefmt='grid'
         ))
     
-    def save_analysis(self, output_file='sequence_analysis.csv'):
+    def save_analysis(self):
         """Save analysis results to CSV."""
+        # Create output directory if it doesn't exist
+        self.output_file.parent.mkdir(parents=True, exist_ok=True)
+        
         # Convert IDs list to string for CSV storage
         self.unique_sequences['ids'] = self.unique_sequences['ids'].apply(lambda x: ', '.join(map(str, x)))
-        self.unique_sequences.to_csv(output_file, index=False)
-        print(f"\nAnalysis results saved to '{output_file}'")
+        self.unique_sequences.to_csv(self.output_file, index=False)
+        print(f"\nAnalysis results saved to '{self.output_file}'")
 
 def main():
-    # Initialize analyzer
-    analyzer = SequenceAnalyzer()
+    # Initialize analyzer with specific file paths
+    analyzer = SequenceAnalyzer(
+        input_file='src/data/features/feature_sequence.csv',
+        output_file='src/data/analysis/sequence_analysis.csv'
+    )
     
     # Read and analyze sequences
     analyzer.read_sequences()

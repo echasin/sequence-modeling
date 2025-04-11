@@ -135,7 +135,7 @@ class PatternedPathGenerator:
 
 def main():
     # Configuration
-    NUM_IDS = 1000  # Number of IDs to generate paths for
+    NUM_IDS = 1 # Number of IDs to generate paths for
     NUM_PATTERNS = 1  # Number of base patterns to use
     MIN_HOPS = 3
     MAX_HOPS = 10
